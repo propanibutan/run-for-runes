@@ -1,14 +1,32 @@
 import { useState } from 'react';
 
-
 function App() {
+  //stan w którym rpzetrzymuję liczby
   const [value, setValue] = useState("");
   console.log('value:', value)
+  const [border, setBorder] = useState("");
+console.log('border',border)
+  
 
   function handleSubmit(e) {
-      e.preventDefault();
-      
+    e.preventDefault();
+    const valueArray = [...value].reverse();
+    console.log(valueArray);
+
+    if (valueArray.length == 1) {
+      if(valueArray[0] == 1){
+        setBorder({borderTop: 'solid black 1px'})
+
+      }
+    } else if (valueArray.length == 2) {
+    } else if (valueArray.length == 3) {
+    } else if (valueArray.length == 4) {
+
+    }
   }
+
+ 
+
 
   //funckja pobierająca dane do state'u
   //i skracająca je gdyby uzytkownik chciał wpisać większą liczbę
@@ -19,7 +37,6 @@ function App() {
       setValue(e.target.value.slice(0, 4));
     }
   }
-
 
   return (
     <div className="App">
@@ -44,12 +61,12 @@ function App() {
       </form>
       <section className="App-image">
         <div className='big-square'>
-          <div className='small-square small_1'/>
-          <div className='small-square small_2'/>
-          <div className='small-square small_3'/>
-          <div className='small-square small_4'/>
-          <div className='small-square small_5'/>
-          <div className='small-square small_6'/>
+          <div className={`small-square `}  />
+          <div className={`small-square `} style={border}/>
+          <div className={`small-square `} style={{}}/>
+          <div className={`small-square `} style={{}}/>
+          <div className={`small-square `} style={{}}/>
+          <div className={`small-square `} style={{}}/>
         </div>
       </section>
     </div>
