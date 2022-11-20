@@ -1,74 +1,84 @@
-import { useState } from 'react';
+import { useState,useCallback, useRef } from 'react';
+import { toPng } from 'html-to-image';
 
 function App() {
   //stan w którym rpzetrzymuję liczby
   const [value, setValue] = useState("");
-  console.log('value:', value)
-  const [border, setBorder] = useState("");
-console.log('border',border)
-  
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const valueArray = [...value].reverse();
-    console.log(valueArray);
+  //tu wrzucam do arraya zeby można było zrobić reverse 
+  //dzięki temu liczby zawsze będą w porządku
+  const valueArray = [...value].reverse();
 
-    if (valueArray.length == 1) {
-      if(valueArray[0] == 1){
-        setBorder({borderTop: 'solid black 1px'})
-
-      }
-    } else if (valueArray.length == 2) {
-    } else if (valueArray.length == 3) {
-    } else if (valueArray.length == 4) {
-
-    }
+  //tutaj mam obiekt na przypisanie wartości do danej klasy
+  const borderArray = { 
+    borderTR: valueArray[0],
+    borderTL: valueArray[1],
+    borderBL: valueArray[2],
+    borderBR: valueArray[3]
   }
-
- 
-
 
   //funckja pobierająca dane do state'u
   //i skracająca je gdyby uzytkownik chciał wpisać większą liczbę
-  function handleChange(e) {
+  const handleChange = (e) => {
     setValue(e.target.value); 
 
     if (e.target.value.length > 4) {
       setValue(e.target.value.slice(0, 4));
     }
   }
+ 
+  //tworze obraz z dom do pobrania w pdf, użyłam do tego paczki html-to-image
+  const image = useRef();
+
+  const makePicture = useCallback(() => {
+    if (image.current === null) {
+      return
+    }
+
+    toPng(image.current, { cacheBust: true, backgroundColor: 'white' })
+      .then((dataUrl) => {
+        const link = document.createElement('a')
+        link.download = 'your-rune.png'
+        link.href = dataUrl
+        link.click()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [image])
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Translate your numbers into runes!</h1>
+    <div className="app">
+      <header className="app-header">
+        <h1>Translate your numbers into the runes!</h1>
       </header>
-      <form 
-        className="App-form"
-        onSubmit={handleSubmit}
-      >
+      <section className="app-form">
         <p>enter a number from 0 to 9999</p>
         <input
           type='number'
-          className="App-form_input"
+          className="app-form_input"
           aria-label="enter a number"
           min='1'
           max='9999'
           value={value}
           onChange={handleChange}
         />
-        <button>start</button>
-      </form>
-      <section className="App-image">
-        <div className='big-square'>
-          <div className={`small-square `}  />
-          <div className={`small-square `} style={border}/>
-          <div className={`small-square `} style={{}}/>
-          <div className={`small-square `} style={{}}/>
-          <div className={`small-square `} style={{}}/>
-          <div className={`small-square `} style={{}}/>
+      </section>
+      <section className="app-image">
+        <div ref={image} className='big-square'>
+          <div className='medium-square_left'>
+            <div className={`small-square top_${borderArray.borderTL}`} />
+            <div className='small-square' />
+            <div className={`small-square bottom_${borderArray.borderBR}`} />
+          </div>
+          <div className='medium-square_right'>
+            <div className={`small-square top_${borderArray.borderTR}`} />
+            <div className='small-square' />
+            <div className={`small-square bottom_${borderArray.borderBL}`} />
+          </div>
         </div>
       </section>
+      <button className='download-btn' onClick={makePicture}>Download</button>
     </div>
   );
 }

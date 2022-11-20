@@ -1,12 +1,133 @@
 .big-square {
-    width: 104px;
-    height: 156px;
-    border: dotted black 1px;
+    width: 100px;
+    height: 150px;
     display: flex;
-    flex-wrap: wrap;
+}
+
+.medium-square_right {
+    width: 50px;
+    border-left: 1px solid black;
+    box-sizing: border-box;
+}
+
+.medium-square_left {
+    width: 50px;
+    border-left: 1px solid black;
+    box-sizing: border-box;
+    transform: rotateY(180deg);
 }
 
 .small-square {
     width: 50px;
     height: 50px;
+    box-sizing: border-box;
+}
+
+//tu jest szczegółowy wygląd kwadracików
+//GÓRNE
+.top_1 {
+    border-top: 2px solid black;
+}
+
+.top_2 {
+    border-bottom: 2px solid black;
+}
+
+.top_3 {
+    border-top: 2px solid black;
+    transform: rotate(45deg) translate(2px, 50%) scale(1.5, 1);
+}
+
+.top_4 {
+    border-top: 2px solid black;
+    transform: rotate(135deg) translate(-1px, 47%) scale(1.5, 1);
+}
+
+.top_5 {
+    border-top: 2px solid black;
+    position: relative;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        border-top: 2px solid black;
+        transform: rotate(135deg) translate(-1px, 48%) scale(1.45, 1);
+    }
+}
+
+.top_6 {
+    border-right: 2px solid black;
+}
+
+.top_7 {
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.top_8 {
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.top_9 {
+    border: 2px solid black;
+    transform: translate(-2px);
+}
+
+//DOLNE - są jakby odbiciem lustrzanym
+.bottom_1 {
+    border-bottom: 2px solid black;
+}
+
+.bottom_2 {
+    border-top: 2px solid black;
+}
+
+.bottom_3 {
+    border-top: 2px solid black;
+    transform: rotate(135deg) translate(-1px, 50%) scale(1.5, 1);
+}
+
+.bottom_4 {
+    border-top: 2px solid black;
+    transform: rotate(45deg) translate(-1px, 47%) scale(1.5, 1);
+}
+
+.bottom_5 {
+    border-bottom: 2px solid black;
+    position: relative;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        border-top: 2px solid black;
+        transform: rotate(45deg) translate(-1px, 48%) scale(1.45, 1);
+    }
+}
+
+.bottom_6 {
+    border-right: 2px solid black;
+}
+
+.bottom_7 {
+    border-bottom: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.bottom_8 {
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+}
+
+.bottom_9 {
+    border: 2px solid black;
+    transform: translate(-2px);
 }
